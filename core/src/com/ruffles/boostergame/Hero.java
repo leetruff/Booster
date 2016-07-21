@@ -14,6 +14,10 @@ public class Hero extends Sprite {
 	TextureAtlas atlas;
 	private float stateTimer = 0;
 	
+	int xPos;
+	
+	public enum State {FLYINGLEFT, FLYINGRIGHT, IDLE};
+	State currentState;
 	
 	public Hero(){
 		super(new Texture(Gdx.files.internal("hero1.png")));
@@ -28,11 +32,49 @@ public class Hero extends Sprite {
 		frames.add(atlas.findRegion("hero4"));
 		
 		heroDefault = new Animation(0.15f, frames);
+		currentState = State.IDLE;
+		
+		xPos = (int) (MyGdxGame.V_WIDTH / 2 - this.getWidth() / 2);
 	}
 	
 	public void update(float delta){
 		setRegion(heroDefault.getKeyFrame(stateTimer, true));
-		setPosition(MyGdxGame.V_WIDTH / 2 - this.getWidth() / 2, 10);
+		setPosition(xPos, 10);
 		stateTimer += delta;
+		
+		if(currentState == State.FLYINGLEFT){
+			setRotation(15f);
+		}
+		
+		else if(currentState == State.FLYINGRIGHT){
+			setRotation(-15f);
+		}
+		
+		else if(currentState == State.IDLE){
+			setRotation(0f);
+		}
+		
+	}
+
+	public int getXpos() {
+		return xPos;
+	}
+
+	public void setXpos(int i) {
+		xPos = i;
+		
+		if(xPos < 0)
+			xPos = 0;
+		
+		if(xPos > 490 - this.getWidth())
+			xPos = (int) (490 - this.getWidth());
+	}
+	
+	public void setState(State state){
+		currentState = state;
+	}
+	
+	public State getState(){
+		return currentState;
 	}
 }
