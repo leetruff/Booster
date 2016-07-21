@@ -1,6 +1,7 @@
 package com.ruffles.boostergame;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.ruffles.boostergame.Hero.State;
 
@@ -26,6 +28,8 @@ public class GameScreen implements Screen {
 	int backgroundYpos = 0;
 	
 	ArrayList<Meteor> meteoritenList;
+	
+	Random rand;
 	
 	
 
@@ -48,7 +52,9 @@ public class GameScreen implements Screen {
 		
 		meteoritenList = new ArrayList<Meteor>();
 		
-		meteoritenList.add(new Meteor(100, 800, 2, 3));
+		//meteoritenList.add(new Meteor(100, 800, 2, 3));
+		
+		rand = new Random();
 	}
 
 	@Override
@@ -81,13 +87,40 @@ public class GameScreen implements Screen {
 		
 		for(int i = 0; i < meteoritenList.size(); i++){
 			meteoritenList.get(i).update(delta);
+			
+			/*
+			 * Meteoriten welche nicht mehr auf dem Bildschirm sind entfernen, damit
+			 * neue gespawned werden koennen
+			 */
+			if(meteoritenList.get(i).setToDestroy){
+				meteoritenList.remove(i);
+			}
 		}
 		
+		/*
+		 * Kollision von Meteoriten und Hero pruefen
+		 */
+		for(int i = 0; i < meteoritenList.size(); i++){
+			if(Intersector.overlaps(meteoritenList.get(i).rectangle, hero.rectangle)){
+				//TODO
+			}
+		}
+		
+		/*
+		 * Background loop
+		 */
 		if(backgroundYpos >= -1980){
-			backgroundYpos -= 2;
+			backgroundYpos -= 1;
 		}
 		else{
 			backgroundYpos = 0;
+		}
+		
+		/*
+		 * Neue Meteoriten spawnen
+		 */
+		if(meteoritenList.size() < 8){
+			meteoritenList.add(new Meteor(rand.nextInt(435), 950, rand.nextInt(3), rand.nextInt(4) + 2));
 		}
 	}
 	
