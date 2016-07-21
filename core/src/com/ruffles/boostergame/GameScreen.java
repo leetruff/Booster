@@ -109,7 +109,7 @@ public class GameScreen implements Screen {
 		/*
 		 * Background loop
 		 */
-		if(backgroundYpos >= -1980){
+		if(backgroundYpos > -1980){
 			backgroundYpos -= 1;
 		}
 		else{
