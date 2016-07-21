@@ -13,6 +13,8 @@ public class GameScreen implements Screen {
 	OrthographicCamera cam;
 	StretchViewport port;
 	SpriteBatch batch;
+	
+	Hero hero;
 
 	public GameScreen(MyGdxGame game) {
 		this.game = game;
@@ -25,6 +27,8 @@ public class GameScreen implements Screen {
 		cam.position.set(port.getWorldWidth() / 2, port.getWorldHeight() / 2, 0);
 		
 		batch = new SpriteBatch();
+		
+		hero = new Hero();
 	}
 
 	@Override
@@ -37,12 +41,13 @@ public class GameScreen implements Screen {
 		batch.setProjectionMatrix(cam.combined);
 		
 		batch.begin();
-		
+		hero.draw(batch);
 		batch.end();
 	}
 
 	private void update(float delta) {
 		cam.update();
+		hero.update(delta);
 	}
 
 	@Override

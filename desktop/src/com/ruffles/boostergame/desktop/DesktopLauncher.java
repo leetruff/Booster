@@ -7,8 +7,8 @@ import com.ruffles.boostergame.MyGdxGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.height = 740;
-		config.width = 360;
+		config.height = 900;
+		config.width = 490;
 		new LwjglApplication(new MyGdxGame(), config);
 	}
 }
