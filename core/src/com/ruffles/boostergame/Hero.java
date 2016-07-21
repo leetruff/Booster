@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
 public class Hero extends Sprite {
@@ -15,6 +16,8 @@ public class Hero extends Sprite {
 	private float stateTimer = 0;
 	
 	int xPos;
+	
+	Rectangle rectangle;
 	
 	public enum State {FLYINGLEFT, FLYINGRIGHT, IDLE};
 	State currentState;
@@ -37,11 +40,17 @@ public class Hero extends Sprite {
 		currentState = State.IDLE;
 		
 		xPos = (int) (MyGdxGame.V_WIDTH / 2 - this.getWidth() / 2);
+		
+		rectangle = new Rectangle(0, 0, this.getWidth(), this.getHeight());
 	}
 	
 	public void update(float delta){
 		setRegion(heroDefault.getKeyFrame(stateTimer, true));
 		setPosition(xPos, 10);
+		
+		//Hitbox an aktuelle Position anpassen
+		rectangle.setPosition(xPos, 10);
+		
 		stateTimer += delta;
 		
 		if(currentState == State.FLYINGLEFT){
@@ -62,7 +71,7 @@ public class Hero extends Sprite {
 			flip(true, false);
 		}
 		
-		if (!lookingRight && isFlipX()) {
+		else if (!lookingRight && isFlipX()) {
 			flip(true, false);
 		}
 		

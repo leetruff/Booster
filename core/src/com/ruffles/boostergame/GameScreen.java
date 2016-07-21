@@ -1,5 +1,7 @@
 package com.ruffles.boostergame;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
@@ -23,6 +25,8 @@ public class GameScreen implements Screen {
 	Texture background;
 	int backgroundYpos = 0;
 	
+	ArrayList<Meteor> meteoritenList;
+	
 	
 
 	public GameScreen(MyGdxGame game) {
@@ -41,6 +45,10 @@ public class GameScreen implements Screen {
 		
 		background = new Texture(Gdx.files.internal("spacebackground.png"));
 		background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
+		
+		meteoritenList = new ArrayList<Meteor>();
+		
+		meteoritenList.add(new Meteor(100, 800, 2, 3));
 	}
 
 	@Override
@@ -56,6 +64,11 @@ public class GameScreen implements Screen {
 		batch.begin();
 		batch.draw(background, 0, 0, 490, 1980, 0, backgroundYpos, 490, 1980, false, false);
 		hero.draw(batch);
+		
+		for(int i = 0; i < meteoritenList.size(); i++){
+			meteoritenList.get(i).draw(batch);
+		}
+		
 		batch.end();
 		
 		
@@ -65,6 +78,10 @@ public class GameScreen implements Screen {
 	private void update(float delta) {
 		cam.update();
 		hero.update(delta);
+		
+		for(int i = 0; i < meteoritenList.size(); i++){
+			meteoritenList.get(i).update(delta);
+		}
 		
 		if(backgroundYpos >= -1980){
 			backgroundYpos -= 2;
