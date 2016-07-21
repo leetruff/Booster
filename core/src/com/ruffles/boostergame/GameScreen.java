@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.ruffles.boostergame.Hero.State;
@@ -17,6 +19,11 @@ public class GameScreen implements Screen {
 	SpriteBatch batch;
 	
 	Hero hero;
+	
+	Texture background;
+	int backgroundYpos = 0;
+	
+	
 
 	public GameScreen(MyGdxGame game) {
 		this.game = game;
@@ -31,6 +38,9 @@ public class GameScreen implements Screen {
 		batch = new SpriteBatch();
 		
 		hero = new Hero();
+		
+		background = new Texture(Gdx.files.internal("spacebackground.png"));
+		background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 	}
 
 	@Override
@@ -44,13 +54,24 @@ public class GameScreen implements Screen {
 		batch.setProjectionMatrix(cam.combined);
 		
 		batch.begin();
+		batch.draw(background, 0, 0, 490, 1980, 0, backgroundYpos, 490, 1980, false, false);
 		hero.draw(batch);
 		batch.end();
+		
+		
+		Gdx.graphics.setTitle("Booster | " + Gdx.graphics.getFramesPerSecond() + " FPS");
 	}
 
 	private void update(float delta) {
 		cam.update();
 		hero.update(delta);
+		
+		if(backgroundYpos >= -1980){
+			backgroundYpos -= 2;
+		}
+		else{
+			backgroundYpos = 0;
+		}
 	}
 	
 	private void handleInput(float delta){

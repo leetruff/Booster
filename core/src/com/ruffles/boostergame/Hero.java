@@ -19,6 +19,8 @@ public class Hero extends Sprite {
 	public enum State {FLYINGLEFT, FLYINGRIGHT, IDLE};
 	State currentState;
 	
+	boolean lookingRight;
+	
 	public Hero(){
 		super(new Texture(Gdx.files.internal("hero1.png")));
 		setBounds(0, 0, (float) (66f * 1), (float) (146f * 1));
@@ -44,14 +46,24 @@ public class Hero extends Sprite {
 		
 		if(currentState == State.FLYINGLEFT){
 			setRotation(15f);
+			lookingRight = false;
 		}
 		
 		else if(currentState == State.FLYINGRIGHT){
 			setRotation(-15f);
+			lookingRight = true;
 		}
 		
 		else if(currentState == State.IDLE){
 			setRotation(0f);
+		}
+		
+		if (lookingRight && !isFlipX()) {
+			flip(true, false);
+		}
+		
+		if (!lookingRight && isFlipX()) {
+			flip(true, false);
 		}
 		
 	}
