@@ -13,9 +13,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -43,8 +46,10 @@ public class GameScreen implements Screen {
 	
 	TextureAtlas atlas;
 	private boolean accleAvailable;
-	
-	
+	FreeTypeFontGenerator generator;
+	private BitmapFont scoreFont;
+
+	int score = 0;
 
 	public GameScreen(MyGdxGame game) {
 		this.game = game;
@@ -134,6 +139,12 @@ public class GameScreen implements Screen {
 			frames.clear();
 			
 			accleAvailable = Gdx.input.isPeripheralAvailable(Peripheral.Accelerometer);
+			
+			
+			generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/ocraextended.ttf"));
+			FreeTypeFontParameter parameter2 = new FreeTypeFontParameter();
+			parameter2.size = 20;
+			scoreFont = generator.generateFont(parameter2);
 	}
 
 	@Override
@@ -154,6 +165,8 @@ public class GameScreen implements Screen {
 		}
 		
 		hero.draw(batch);
+		
+		scoreFont.draw(batch, "Score: " + score, 320, 880);
 		
 		batch.end();
 		
@@ -220,6 +233,7 @@ public class GameScreen implements Screen {
 			backgroundYpos = 0;
 		}
 		
+		score += 1;
 
 	}
 	

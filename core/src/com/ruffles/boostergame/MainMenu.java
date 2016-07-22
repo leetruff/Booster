@@ -44,6 +44,7 @@ public class MainMenu implements Screen {
 	
 	FreeTypeFontGenerator generator;
 	
+	
 	public MainMenu(MyGdxGame game) {
 		this.game = game;
 	}
@@ -95,6 +96,7 @@ public class MainMenu implements Screen {
 		
 		playButton.addListener(new ChangeListener() {
 	        public void changed (ChangeEvent event, Actor actor) {
+	        	Gdx.input.setInputProcessor(null);
 	            game.setScreen(new GameScreen(game));
 	        }
 	    });
@@ -142,6 +144,7 @@ public class MainMenu implements Screen {
 		else{
 			backgroundYpos = 0;
 		}
+		
 		
 	}
 
