@@ -26,6 +26,14 @@ public class Hero extends Sprite {
 	
 	float rotation;
 	
+	Animation explosionAnimation;
+	TextureAtlas atlas2;
+	public boolean isHit;
+	
+	private float explosionTimer = 0;
+	
+	public boolean gameOver = false;
+	
 	public Hero(){
 		super(new Texture(Gdx.files.internal("hero1.png")));
 		setBounds(0, 0, (float) (66f * 1), (float) (146f * 1));
@@ -39,11 +47,23 @@ public class Hero extends Sprite {
 		frames.add(atlas.findRegion("hero4"));
 		
 		heroDefault = new Animation(0.15f, frames);
+		frames.clear();
 		currentState = State.IDLE;
 		
 		xPos = (int) (MyGdxGame.V_WIDTH / 2 - this.getWidth() / 2);
 		
 		rectangle = new Rectangle(0, 40, this.getWidth() - 30, this.getHeight() - 80);
+		
+		
+		atlas2 = new TextureAtlas(Gdx.files.internal("explosion/bossExplosion.pack"));
+		
+		frames.add(atlas2.findRegion("explosion01"));
+		frames.add(atlas2.findRegion("explosion02"));
+		frames.add(atlas2.findRegion("explosion03"));
+		frames.add(atlas2.findRegion("explosion04"));
+		frames.add(atlas2.findRegion("explosion05"));
+		
+		explosionAnimation = new Animation(0.4f, frames);
 	}
 	
 	public void update(float delta){
@@ -77,8 +97,21 @@ public class Hero extends Sprite {
 			flip(true, false);
 		}
 		
+		if(isHit){
+			setRegion(explosionAnimation.getKeyFrame(explosionTimer));
+			explosionTimer += delta;
+			
+			if(explosionAnimation.isAnimationFinished(explosionTimer)){
+				gameOver = true;
+			}
+		}
+		
 	}
 
+	public void setHit(boolean b){
+		isHit = b;
+	}
+	
 	public float getXpos() {
 		return xPos;
 	}

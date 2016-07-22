@@ -165,7 +165,10 @@ public class GameScreen implements Screen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		update(delta);
-		handleInput(delta);
+		
+		if(!hero.isHit){
+			handleInput(delta);
+		}
 		
 		batch.setProjectionMatrix(cam.combined);
 		
@@ -241,7 +244,7 @@ public class GameScreen implements Screen {
 		 */
 		for(int i = 0; i < meteoritenList.size(); i++){
 			if(Intersector.overlaps(meteoritenList.get(i).rectangle, hero.rectangle)){
-				game.setScreen(new GameoverScreen(game));
+				hero.setHit(true);
 			}
 		}
 		
@@ -257,6 +260,10 @@ public class GameScreen implements Screen {
 		
 		score += 1;
 
+		if(hero.gameOver){
+			game.setScreen(new GameoverScreen(game));
+		}
+		
 	}
 	
 	private void handleInput(float delta){
