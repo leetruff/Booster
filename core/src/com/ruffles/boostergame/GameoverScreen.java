@@ -42,8 +42,9 @@ public class GameoverScreen implements Screen {
 	FreeTypeFontGenerator generator;
 	
 	
-	public GameoverScreen(MyGdxGame game) {
+	public GameoverScreen(MyGdxGame game, int backgroundYpos) {
 		this.game = game;
+		this.backgroundYpos = backgroundYpos;
 	}
 	
 	@Override
@@ -84,7 +85,7 @@ public class GameoverScreen implements Screen {
 		menuButton.addListener(new ChangeListener() {
 	        public void changed (ChangeEvent event, Actor actor) {
 	        	Gdx.input.setInputProcessor(null);
-	            game.setScreen(new MainMenu(game));
+	            game.setScreen(new MainMenu(game, backgroundYpos));
 	        }
 	    });
 		

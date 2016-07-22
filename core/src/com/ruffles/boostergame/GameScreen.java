@@ -60,8 +60,9 @@ public class GameScreen implements Screen {
 
 	ShapeRenderer renderer;
 	
-	public GameScreen(MyGdxGame game) {
+	public GameScreen(MyGdxGame game, int backgroundYpos) {
 		this.game = game;
+		this.backgroundYpos = backgroundYpos;
 	}
 
 	@Override
@@ -261,7 +262,7 @@ public class GameScreen implements Screen {
 		score += 1;
 
 		if(hero.gameOver){
-			game.setScreen(new GameoverScreen(game));
+			game.setScreen(new GameoverScreen(game, backgroundYpos));
 		}
 		
 	}
