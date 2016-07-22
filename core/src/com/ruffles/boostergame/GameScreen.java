@@ -259,7 +259,9 @@ public class GameScreen implements Screen {
 			backgroundYpos = 0;
 		}
 		
-		score += 1;
+		if(!hero.isHit){
+			score += 1;
+		}
 
 		if(hero.gameOver){
 			game.setScreen(new GameoverScreen(game, backgroundYpos));
