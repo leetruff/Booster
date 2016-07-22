@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -41,10 +42,13 @@ public class GameoverScreen implements Screen {
 	
 	FreeTypeFontGenerator generator;
 	
+	int score;
+	BitmapFont scoreFont;
 	
-	public GameoverScreen(MyGdxGame game, int backgroundYpos) {
+	public GameoverScreen(MyGdxGame game, int backgroundYpos, int score) {
 		this.game = game;
 		this.backgroundYpos = backgroundYpos;
+		this.score = score;
 	}
 	
 	@Override
@@ -89,6 +93,13 @@ public class GameoverScreen implements Screen {
 	        }
 	    });
 		
+		/*
+		 * Font fuer Score Anzeige
+		 */
+		
+		FreeTypeFontParameter parameter2 = new FreeTypeFontParameter();
+		parameter2.size = 35;
+		scoreFont = generator.generateFont(parameter2);
 	}
 
 	@Override
@@ -100,6 +111,20 @@ public class GameoverScreen implements Screen {
 		
 		batch.begin();
 		batch.draw(background, 0, 0, 490, 2048, 0, backgroundYpos, 490, 2048, false, false);
+		scoreFont.draw(batch, "Final Score:", 120, 800);
+		
+		if(score < 1000)
+		scoreFont.draw(batch, score + "", 205, 750);
+		
+		else if(score <10000)
+		scoreFont.draw(batch, score + "", 195, 750);
+		
+		else if(score <100000)
+		scoreFont.draw(batch, score + "", 188, 750);
+		
+		else
+		scoreFont.draw(batch, score + "", 184, 750);
+		
 		batch.end();
 		
 		//TODO Buttons
