@@ -29,6 +29,8 @@ public class MainMenu implements Screen {
 	Texture background;
 	int backgroundYpos = 0;
 	
+	Texture boosterTexture;
+	
 	Stage stage;
 	
 	TextButtonStyle style;
@@ -57,6 +59,8 @@ public class MainMenu implements Screen {
 		background = new Texture(Gdx.files.internal("spacebackground.png"));
 		background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		
+		boosterTexture = new Texture(Gdx.files.internal("boosterbackground2.png"));
+		
 		stage = new Stage(port, batch);
 		Gdx.input.setInputProcessor(stage);
 		
@@ -76,17 +80,17 @@ public class MainMenu implements Screen {
 		
 		playButton = new TextButton("Play", style);
 		playButton.setSize(300, 75);
-		playButton.setPosition(490/2 - playButton.getWidth() / 2, 350);
+		playButton.setPosition(490/2 - playButton.getWidth() / 2, 320);
 		stage.addActor(playButton);
 		
 		highscoreButton = new TextButton("Highscore", style);
 		highscoreButton.setSize(300, 75);
-		highscoreButton.setPosition(490/2 - highscoreButton.getWidth() / 2, 250);
+		highscoreButton.setPosition(490/2 - highscoreButton.getWidth() / 2, 220);
 		stage.addActor(highscoreButton);
 		
 		optionsButton = new TextButton("Options", style);
 		optionsButton.setSize(300, 75);
-		optionsButton.setPosition(490/2 - optionsButton.getWidth() / 2, 150);
+		optionsButton.setPosition(490/2 - optionsButton.getWidth() / 2, 120);
 		stage.addActor(optionsButton);
 		
 		playButton.addListener(new ChangeListener() {
@@ -117,6 +121,7 @@ public class MainMenu implements Screen {
 		
 		batch.begin();
 		batch.draw(background, 0, 0, 490, 2048, 0, backgroundYpos, 490, 2048, false, false);
+		batch.draw(boosterTexture, 46, 550);
 		batch.end();
 		
 		stage.act();
