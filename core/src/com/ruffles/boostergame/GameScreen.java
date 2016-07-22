@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Input.Peripheral;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -40,6 +42,7 @@ public class GameScreen implements Screen {
 	Animation meteorBraun;
 	
 	TextureAtlas atlas;
+	private boolean accleAvailable;
 	
 	
 
@@ -129,7 +132,8 @@ public class GameScreen implements Screen {
 			
 			meteorBraun = new Animation(0.2f, frames);
 			frames.clear();
-
+			
+			accleAvailable = Gdx.input.isPeripheralAvailable(Peripheral.Accelerometer);
 	}
 
 	@Override
@@ -144,11 +148,12 @@ public class GameScreen implements Screen {
 		
 		batch.begin();
 		batch.draw(background, 0, 0, 490, 2048, 0, backgroundYpos, 490, 2048, false, false);
-		hero.draw(batch);
 		
 		for(int i = 0; i < meteoritenList.size(); i++){
 			meteoritenList.get(i).draw(batch);
 		}
+		
+		hero.draw(batch);
 		
 		batch.end();
 		
@@ -219,18 +224,45 @@ public class GameScreen implements Screen {
 	}
 	
 	private void handleInput(float delta){
-		if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)){
-			hero.setXpos(hero.getXpos() - 8);
-			hero.setState(State.FLYINGLEFT);
+		
+		if(Gdx.app.getType() == ApplicationType.Desktop){
+			if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)){
+				hero.setXpos(hero.getXpos() - 8);
+				hero.setRotation(2.5f);
+				hero.setState(State.FLYINGLEFT);
+			}
+			
+			if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)){
+				hero.setXpos(hero.getXpos() + 8);
+				hero.setRotation(-2.5f);
+				hero.setState(State.FLYINGRIGHT);
+			}
+			
+			if(!Gdx.input.isKeyPressed(Keys.A) && !Gdx.input.isKeyPressed(Keys.LEFT) && !Gdx.input.isKeyPressed(Keys.D) && !Gdx.input.isKeyPressed(Keys.RIGHT)){
+				hero.setState(State.IDLE);
+			}
 		}
 		
-		if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)){
-			hero.setXpos(hero.getXpos() + 8);
-			hero.setState(State.FLYINGRIGHT);
-		}
-		
-		if(!Gdx.input.isKeyPressed(Keys.A) && !Gdx.input.isKeyPressed(Keys.LEFT) && !Gdx.input.isKeyPressed(Keys.D) && !Gdx.input.isKeyPressed(Keys.RIGHT)){
-			hero.setState(State.IDLE);
+		else if(Gdx.app.getType() == ApplicationType.Android && accleAvailable){
+		    
+		    float accelX = Gdx.input.getAccelerometerX();
+		    
+			if(accelX > 0.1f){
+				hero.setXpos((hero.getXpos() - 7.5f * accelX));
+				hero.setRotation(accelX);
+				hero.setState(State.FLYINGLEFT);
+			}
+			
+			else if(accelX < -0.1f){
+				hero.setXpos((hero.getXpos() + 7.5f * -accelX));
+				hero.setRotation(accelX);
+				hero.setState(State.FLYINGRIGHT);
+			}
+			
+			else{
+				hero.setState(State.IDLE);
+				hero.setRotation(0);
+			}
 		}
 	}
 

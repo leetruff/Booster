@@ -15,7 +15,7 @@ public class Hero extends Sprite {
 	TextureAtlas atlas;
 	private float stateTimer = 0;
 	
-	int xPos;
+	float xPos;
 	
 	Rectangle rectangle;
 	
@@ -23,6 +23,8 @@ public class Hero extends Sprite {
 	State currentState;
 	
 	boolean lookingRight;
+	
+	float rotation;
 	
 	public Hero(){
 		super(new Texture(Gdx.files.internal("hero1.png")));
@@ -53,13 +55,13 @@ public class Hero extends Sprite {
 		
 		stateTimer += delta;
 		
+		super.setRotation(6f * rotation);
+		
 		if(currentState == State.FLYINGLEFT){
-			setRotation(15f);
 			lookingRight = false;
 		}
 		
 		else if(currentState == State.FLYINGRIGHT){
-			setRotation(-15f);
 			lookingRight = true;
 		}
 		
@@ -77,12 +79,12 @@ public class Hero extends Sprite {
 		
 	}
 
-	public int getXpos() {
+	public float getXpos() {
 		return xPos;
 	}
 
-	public void setXpos(int i) {
-		xPos = i;
+	public void setXpos(float f) {
+		xPos = f;
 		
 		if(xPos < 0)
 			xPos = 0;
@@ -97,5 +99,9 @@ public class Hero extends Sprite {
 	
 	public State getState(){
 		return currentState;
+	}
+	
+	public void setRotation(float rotation){
+		this.rotation = rotation;
 	}
 }
