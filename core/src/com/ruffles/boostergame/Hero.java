@@ -43,7 +43,7 @@ public class Hero extends Sprite {
 		
 		xPos = (int) (MyGdxGame.V_WIDTH / 2 - this.getWidth() / 2);
 		
-		rectangle = new Rectangle(0, 0, this.getWidth(), this.getHeight());
+		rectangle = new Rectangle(0, 40, this.getWidth() - 30, this.getHeight() - 80);
 	}
 	
 	public void update(float delta){
@@ -51,7 +51,7 @@ public class Hero extends Sprite {
 		setPosition(xPos, 10);
 		
 		//Hitbox an aktuelle Position anpassen
-		rectangle.setPosition(xPos, 10);
+		rectangle.setPosition(xPos + 15, 85);
 		
 		stateTimer += delta;
 		

@@ -48,7 +48,7 @@ public class Meteor extends Sprite {
 		
 		meteorDefault = animation;
 		
-		rectangle = new Rectangle(0, 0, this.getWidth(), this.getHeight());
+		rectangle = new Rectangle(0, 0, 25, 25);
 	}
 	
 	public void update(float delta){
@@ -60,7 +60,7 @@ public class Meteor extends Sprite {
 		}
 		
 		//Hitbox an aktuelle Position anpassen
-		rectangle.setPosition(xPos, yPos);
+		rectangle.setPosition(xPos + 20, yPos + 20);
 		
 		stateTimer += delta;
 		

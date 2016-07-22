@@ -19,10 +19,13 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.ruffles.boostergame.Hero.State;
+import com.sun.prism.GraphicsPipeline.ShaderType;
 
 public class GameScreen implements Screen {
 	
@@ -50,7 +53,13 @@ public class GameScreen implements Screen {
 	private BitmapFont scoreFont;
 
 	int score = 0;
+	
+	/*
+	 * FOR DEBUG
+	 */
 
+	ShapeRenderer renderer;
+	
 	public GameScreen(MyGdxGame game) {
 		this.game = game;
 	}
@@ -145,6 +154,9 @@ public class GameScreen implements Screen {
 			FreeTypeFontParameter parameter2 = new FreeTypeFontParameter();
 			parameter2.size = 20;
 			scoreFont = generator.generateFont(parameter2);
+			
+//			renderer = new ShapeRenderer();
+//			renderer.setAutoShapeType(true);
 	}
 
 	@Override
@@ -157,12 +169,21 @@ public class GameScreen implements Screen {
 		
 		batch.setProjectionMatrix(cam.combined);
 		
+		//renderer.begin();
+		
 		batch.begin();
 		batch.draw(background, 0, 0, 490, 2048, 0, backgroundYpos, 490, 2048, false, false);
 		
+		//renderer.set(ShapeType.Line);
+		
 		for(int i = 0; i < meteoritenList.size(); i++){
 			meteoritenList.get(i).draw(batch);
+			//renderer.rect(meteoritenList.get(i).rectangle.x, meteoritenList.get(i).rectangle.y, meteoritenList.get(i).rectangle.width, meteoritenList.get(i).rectangle.height);
 		}
+		
+		
+		//renderer.rect(hero.rectangle.x, hero.rectangle.y, hero.rectangle.width, hero.rectangle.height);
+		
 		
 		hero.draw(batch);
 		
@@ -170,6 +191,7 @@ public class GameScreen implements Screen {
 		
 		batch.end();
 		
+		//renderer.end();
 		
 		Gdx.graphics.setTitle("Booster | " + Gdx.graphics.getFramesPerSecond() + " FPS");
 	}
@@ -181,7 +203,7 @@ public class GameScreen implements Screen {
 		/*
 		 * Neue Meteoriten spawnen
 		 */
-		if(meteoritenList.size() < 8){
+		if(meteoritenList.size() < 10){
 			
 			switch (rand.nextInt(3)) {
 			case 0:
@@ -219,7 +241,7 @@ public class GameScreen implements Screen {
 		 */
 		for(int i = 0; i < meteoritenList.size(); i++){
 			if(Intersector.overlaps(meteoritenList.get(i).rectangle, hero.rectangle)){
-				//TODO
+				game.setScreen(new GameoverScreen(game));
 			}
 		}
 		
