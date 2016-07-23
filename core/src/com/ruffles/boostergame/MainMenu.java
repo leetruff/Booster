@@ -56,6 +56,7 @@ public class MainMenu implements Screen {
 		port = new StretchViewport(MyGdxGame.V_WIDTH, MyGdxGame.V_HEIGHT, cam);
 		cam.position.set(port.getWorldWidth() / 2, port.getWorldHeight() / 2, 0);
 		
+		
 		batch = new SpriteBatch();
 		
 		background = new Texture(Gdx.files.internal("spacebackground.png"));
