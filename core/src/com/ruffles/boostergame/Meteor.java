@@ -27,7 +27,7 @@ public class Meteor extends Sprite {
 	private boolean flip;
 	boolean setToDestroy = false;
 	
-	public Meteor(int xPos, int yPos, int color, int speed, Animation animation){
+	public Meteor(int xPos, int yPos, int speed, Animation animation){
 		
 		//Initialisieren mit Hero Sprite, weil das default Meteor-Sprite den falschen Bit-Channel hat
 		super(new Texture(Gdx.files.internal("hero1.png")));

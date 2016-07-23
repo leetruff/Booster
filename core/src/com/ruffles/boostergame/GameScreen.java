@@ -60,6 +60,8 @@ public class GameScreen implements Screen {
 
 	ShapeRenderer renderer;
 	
+	float meteoritenSnipeTimer;
+	
 	public GameScreen(MyGdxGame game, int backgroundYpos) {
 		this.game = game;
 		this.backgroundYpos = backgroundYpos;
@@ -171,6 +173,8 @@ public class GameScreen implements Screen {
 			handleInput(delta);
 		}
 		
+		
+		
 		batch.setProjectionMatrix(cam.combined);
 		
 		//renderer.begin();
@@ -211,19 +215,45 @@ public class GameScreen implements Screen {
 			
 			switch (rand.nextInt(3)) {
 			case 0:
-				meteoritenList.add(new Meteor(rand.nextInt(435), 950, rand.nextInt(3), rand.nextInt(4) + 2, meteorGrau));
+				meteoritenList.add(new Meteor(rand.nextInt(435), 950, rand.nextInt(4) + 3, meteorGrau));
 				break;
 			case 1:
-				meteoritenList.add(new Meteor(rand.nextInt(435), 950, rand.nextInt(3), rand.nextInt(4) + 2, meteorRot));
+				meteoritenList.add(new Meteor(rand.nextInt(435), 950, rand.nextInt(4) + 3, meteorRot));
 				break;
 			case 2:
-				meteoritenList.add(new Meteor(rand.nextInt(435), 950, rand.nextInt(3), rand.nextInt(4) + 2, meteorBraun));
+				meteoritenList.add(new Meteor(rand.nextInt(435), 950, rand.nextInt(4) + 3, meteorBraun));
 				break;
 
 			default:
 				break;
 			}
 			
+		}
+		
+		/*
+		 * 
+		 * Alle 5 Sekunden einen Meteoriten an die xPos des Heros spawnen um camping zu verhindern
+		 */
+		meteoritenSnipeTimer += delta;
+		
+		if(meteoritenSnipeTimer > 3.5f){
+			
+			switch (rand.nextInt(3)) {
+			case 0:
+				meteoritenList.add(new Meteor((int) hero.rectangle.x - 15, 950, rand.nextInt(4) + 3, meteorGrau));
+				break;
+			case 1:
+				meteoritenList.add(new Meteor((int) hero.rectangle.x - 15, 950, rand.nextInt(4) + 3, meteorRot));
+				break;
+			case 2:
+				meteoritenList.add(new Meteor((int) hero.rectangle.x - 15, 950, rand.nextInt(4) + 3, meteorBraun));
+				break;
+
+			default:
+				break;
+			}
+			
+			meteoritenSnipeTimer = 0;
 		}
 		
 		for(int i = 0; i < meteoritenList.size(); i++){
