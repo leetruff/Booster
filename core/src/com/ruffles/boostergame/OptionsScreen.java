@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -18,7 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
-public class MainMenu implements Screen {
+public class OptionsScreen implements Screen {
 
 	
 	MyGdxGame game;
@@ -29,23 +30,21 @@ public class MainMenu implements Screen {
 	Texture background;
 	int backgroundYpos = 0;
 	
-	Texture boosterTexture;
 	
 	Stage stage;
 	
 	TextButtonStyle style;
 	
-	TextButton playButton;
-	TextButton highscoreButton;
-	TextButton optionsButton;
+	TextButton menuButton;
 	
 	Skin skin;
 	private TextureAtlas atlas;
 	
 	FreeTypeFontGenerator generator;
 	
+	BitmapFont scoreFont;
 	
-	public MainMenu(MyGdxGame game, int backgroundYpos) {
+	public OptionsScreen(MyGdxGame game, int backgroundYpos) {
 		this.game = game;
 		this.backgroundYpos = backgroundYpos;
 	}
@@ -56,13 +55,11 @@ public class MainMenu implements Screen {
 		port = new StretchViewport(MyGdxGame.V_WIDTH, MyGdxGame.V_HEIGHT, cam);
 		cam.position.set(port.getWorldWidth() / 2, port.getWorldHeight() / 2, 0);
 		
-		
 		batch = new SpriteBatch();
 		
 		background = new Texture(Gdx.files.internal("spacebackground.png"));
 		background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		
-		boosterTexture = new Texture(Gdx.files.internal("boosterbackground2.png"));
 		
 		stage = new Stage(port, batch);
 		Gdx.input.setInputProcessor(stage);
@@ -81,39 +78,27 @@ public class MainMenu implements Screen {
 		style.font = generator.generateFont(parameter);
 		
 		
-		playButton = new TextButton("Play", style);
-		playButton.setSize(300, 75);
-		playButton.setPosition(490/2 - playButton.getWidth() / 2, 320);
-		stage.addActor(playButton);
+		menuButton = new TextButton("Menu", style);
+		menuButton.setSize(300, 75);
+		menuButton.setPosition(490/2 - menuButton.getWidth() / 2, 120);
+		stage.addActor(menuButton);
 		
-		highscoreButton = new TextButton("Highscore", style);
-		highscoreButton.setSize(300, 75);
-		highscoreButton.setPosition(490/2 - highscoreButton.getWidth() / 2, 220);
-		stage.addActor(highscoreButton);
 		
-		optionsButton = new TextButton("Options", style);
-		optionsButton.setSize(300, 75);
-		optionsButton.setPosition(490/2 - optionsButton.getWidth() / 2, 120);
-		stage.addActor(optionsButton);
-		
-		playButton.addListener(new ChangeListener() {
+		menuButton.addListener(new ChangeListener() {
 	        public void changed (ChangeEvent event, Actor actor) {
 	        	Gdx.input.setInputProcessor(null);
-	            game.setScreen(new GameScreen(game, backgroundYpos));
+	            game.setScreen(new MainMenu(game, backgroundYpos));
 	        }
 	    });
 		
-		highscoreButton.addListener(new ChangeListener() {
-	        public void changed (ChangeEvent event, Actor actor) {
-	        	game.setScreen(new HighscoreScreen(game, backgroundYpos));
-	        }
-	    });
 		
-		optionsButton.addListener(new ChangeListener() {
-	        public void changed (ChangeEvent event, Actor actor) {
-	        	game.setScreen(new OptionsScreen(game, backgroundYpos));
-	        }
-	    });
+		/*
+		 * Font fuer Schriftzuege
+		 */
+		
+		FreeTypeFontParameter parameter2 = new FreeTypeFontParameter();
+		parameter2.size = 35;
+		scoreFont = generator.generateFont(parameter2);
 	}
 
 	@Override
@@ -125,9 +110,12 @@ public class MainMenu implements Screen {
 		
 		batch.begin();
 		batch.draw(background, 0, 0, 490, 2048, 0, backgroundYpos, 490, 2048, false, false);
-		batch.draw(boosterTexture, 46, 550);
+		scoreFont.draw(batch, "Options Feature", 80, 700);
+		scoreFont.draw(batch, "coming soon!", 115, 650);
+		
 		batch.end();
 		
+		//TODO Buttons
 		stage.act();
 		stage.draw();
 		
