@@ -324,13 +324,13 @@ public class GameScreen implements Screen {
 		    float accelX = Gdx.input.getAccelerometerX();
 		    
 			if(accelX > 0.1f){
-				hero.setXpos((hero.getXpos() - 7.5f * accelX));
+				hero.setXpos((hero.getXpos() - 5.5f * accelX));
 				hero.setRotation(accelX);
 				hero.setState(State.FLYINGLEFT);
 			}
 			
 			else if(accelX < -0.1f){
-				hero.setXpos((hero.getXpos() + 7.5f * -accelX));
+				hero.setXpos((hero.getXpos() + 5.5f * -accelX));
 				hero.setRotation(accelX);
 				hero.setState(State.FLYINGRIGHT);
 			}
