@@ -35,6 +35,7 @@ public class GameoverScreen implements Screen {
 	
 	TextButtonStyle style;
 	
+	TextButton playagainButton;
 	TextButton menuButton;
 	
 	Skin skin;
@@ -85,11 +86,22 @@ public class GameoverScreen implements Screen {
 		menuButton.setPosition(490/2 - menuButton.getWidth() / 2, 120);
 		stage.addActor(menuButton);
 		
+		playagainButton = new TextButton("Play again", style);
+		playagainButton.setSize(300, 75);
+		playagainButton.setPosition(490/2 - playagainButton.getWidth() / 2, 220);
+		stage.addActor(playagainButton);
 		
 		menuButton.addListener(new ChangeListener() {
 	        public void changed (ChangeEvent event, Actor actor) {
 	        	Gdx.input.setInputProcessor(null);
 	            game.setScreen(new MainMenu(game, backgroundYpos));
+	        }
+	    });
+		
+		playagainButton.addListener(new ChangeListener() {
+	        public void changed (ChangeEvent event, Actor actor) {
+	        	Gdx.input.setInputProcessor(null);
+	            game.setScreen(new GameScreen(game, backgroundYpos));
 	        }
 	    });
 		

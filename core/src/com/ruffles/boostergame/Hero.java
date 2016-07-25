@@ -63,7 +63,7 @@ public class Hero extends Sprite {
 		frames.add(atlas2.findRegion("explosion04"));
 		frames.add(atlas2.findRegion("explosion05"));
 		
-		explosionAnimation = new Animation(0.4f, frames);
+		explosionAnimation = new Animation(0.15f, frames);
 	}
 	
 	public void update(float delta){
