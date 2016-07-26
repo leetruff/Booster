@@ -123,6 +123,9 @@ public class MainMenu implements Screen {
 		
 		update(delta);
 		
+		
+		batch.setProjectionMatrix(cam.combined);
+		
 		batch.begin();
 		batch.draw(background, 0, 0, 490, 2048, 0, backgroundYpos, 490, 2048, false, false);
 		batch.draw(boosterTexture, 46, 550);
