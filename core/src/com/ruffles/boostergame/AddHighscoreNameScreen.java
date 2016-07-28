@@ -95,17 +95,18 @@ public class AddHighscoreNameScreen implements Screen {
 		
 		confirmButton.addListener(new ChangeListener() {
 	        public void changed (ChangeEvent event, Actor actor) {
-	        	//TODO
-	        	//Eingabefeld fuer Namen und Highscore adden
 	        	String name = nameField.getText();
 	        	
 	        	if(name.length() > 10){
 	        		name = name.substring(0, 10);
 	        	}
 	        	
-	        	IOController.addToHighscore(name, score);
-	        	Gdx.input.setInputProcessor(null);
-	            game.setScreen(new GameoverScreen(game, backgroundYpos, score));
+	        	
+	        	if(!name.equals("") && !name.equals(" ") && !name.equals("  ") && !name.equals("   ") && !name.equals("    ") && !name.equals("     ")){
+	        		IOController.addToHighscore(name, score);
+	        		Gdx.input.setInputProcessor(null);
+	        		game.setScreen(new GameoverScreen(game, backgroundYpos, score));
+	        	}
 	        }
 	    });
 		

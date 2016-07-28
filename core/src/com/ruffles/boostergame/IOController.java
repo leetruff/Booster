@@ -8,7 +8,6 @@ public class IOController {
 	public static Preferences prefs = Gdx.app.getPreferences("boosterprefs");
 
 	public static boolean qualifiesForHighscore(int score) {
-		//TODO
 		
 		int highscoreScore3 = 0;
 		
@@ -27,7 +26,6 @@ public class IOController {
 	}
 	
 	public static void addToHighscore(String name, int score){
-		//TODO
 		
 		String highscoreName1 = "";
 		String highscoreName2 = "";
