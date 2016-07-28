@@ -77,7 +77,7 @@ public class GameScreen implements Screen {
 		
 		hero = new Hero();
 		
-		background = new Texture(Gdx.files.internal("spacebackground.png"));
+		background = BigAssets.spaceBackground;
 		background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		
 		meteoritenList = new ArrayList<Meteor>();

@@ -13,6 +13,7 @@ public class MyGdxGame extends Game {
 	
 	@Override
 	public void create () {
+		BigAssets.load();
 		setScreen(new MainMenu(this, 0));
 	}
 

@@ -73,7 +73,7 @@ public class GameoverScreen implements Screen {
 		
 		batch = new SpriteBatch();
 		
-		background = new Texture(Gdx.files.internal("spacebackground.png"));
+		background = BigAssets.spaceBackground;
 		background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		
 		

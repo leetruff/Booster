@@ -60,7 +60,7 @@ public class MainMenu implements Screen {
 		
 		batch = new SpriteBatch();
 		
-		background = new Texture(Gdx.files.internal("spacebackground.png"));
+		background = BigAssets.spaceBackground;
 		background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		
 		boosterTexture = new Texture(Gdx.files.internal("boosterbackground2.png"));
