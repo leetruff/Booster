@@ -294,7 +294,12 @@ public class GameScreen implements Screen {
 		}
 
 		if(hero.gameOver){
-			game.setScreen(new GameoverScreen(game, backgroundYpos, score));
+			if(IOController.qualifiesForHighscore(score)){
+				game.setScreen(new AddHighscoreNameScreen(game, backgroundYpos, score));
+			}
+			else{
+				game.setScreen(new GameoverScreen(game, backgroundYpos, score));
+			}
 		}
 		
 	}

@@ -124,37 +124,37 @@ public class HighscoreScreen implements Screen {
 		 * Highscores aus .prefs auslesen
 		 */
 		
-		highscoreName1 = "Lars";
-		highscoreName2 = "Lars";
-		highscoreName3 = "Lars";
+//		highscoreName1 = "Lars";
+//		highscoreName2 = "Lars";
+//		highscoreName3 = "Lars";
+//		
+//		highscoreScore1 = 16512;
+//		highscoreScore2 = 12941;
+//		highscoreScore3 = 5122;
 		
-		highscoreScore1 = 16512;
-		highscoreScore2 = 12941;
-		highscoreScore3 = 5122;
+		if(IOController.prefs.getString("highscoreName1") != null){
+			highscoreName1 = IOController.prefs.getString("highscoreName1", "-1");
+		}
 		
-//		if(IOController.prefs.getString("highscoreName1") != null){
-//			highscoreName1 = IOController.prefs.getString("highscoreName1", "-1");
-//		}
-//		
-//		if(IOController.prefs.getString("highscoreScore1") != null){
-//			highscoreScore1 = IOController.prefs.getInteger("highscoreScore1");
-//		}
-//		
-//		if(IOController.prefs.getString("highscoreName2") != null){
-//			highscoreName2 = IOController.prefs.getString("highscoreName2", "-1");
-//		}
-//		
-//		if(IOController.prefs.getString("highscoreScore2") != null){
-//			highscoreScore2 = IOController.prefs.getInteger("highscoreScore2");
-//		}
-//		
-//		if(IOController.prefs.getString("highscoreName3") != null){
-//			highscoreName3 = IOController.prefs.getString("highscoreName3", "-1");
-//		}
-//		
-//		if(IOController.prefs.getString("highscoreScore3") != null){
-//			highscoreScore3 = IOController.prefs.getInteger("highscoreScore3");
-//		}
+		if(IOController.prefs.getInteger("highscoreScore1") > 0){
+			highscoreScore1 = IOController.prefs.getInteger("highscoreScore1");
+		}
+		
+		if(IOController.prefs.getString("highscoreName2") != null){
+			highscoreName2 = IOController.prefs.getString("highscoreName2", "-1");
+		}
+		
+		if(IOController.prefs.getInteger("highscoreScore2") > 0){
+			highscoreScore2 = IOController.prefs.getInteger("highscoreScore2");
+		}
+		
+		if(IOController.prefs.getString("highscoreName3") != null){
+			highscoreName3 = IOController.prefs.getString("highscoreName3", "-1");
+		}
+		
+		if(IOController.prefs.getInteger("highscoreScore3") > 0){
+			highscoreScore3 = IOController.prefs.getInteger("highscoreScore3");
+		}
 		
 	}
 
@@ -172,27 +172,27 @@ public class HighscoreScreen implements Screen {
 		
 		if(highscoreName1 != "-1"){
 			scoreFont.draw(batch, highscoreName1, 85, 700);
-			scoreFont.draw(batch, "-", 250, 700);
 			scoreFont.draw(batch, highscoreScore1 + "", 345, 700);
 			
-			batch.draw(goldmedal, 55, 677);
 		}
+		scoreFont.draw(batch, "-", 250, 700);
+		batch.draw(goldmedal, 55, 677);
 		
 		if(highscoreName2 != "-1"){
 			scoreFont.draw(batch, highscoreName2, 85, 650);
-			scoreFont.draw(batch, "-", 250, 650);
 			scoreFont.draw(batch, highscoreScore2 + "", 345, 650);
 			
-			batch.draw(silvermedal, 55, 627);
 		}
+		scoreFont.draw(batch, "-", 250, 650);
+		batch.draw(silvermedal, 55, 627);
 		
 		if(highscoreName3 != "-1"){
 			scoreFont.draw(batch, highscoreName3, 85, 600);
-			scoreFont.draw(batch, "-", 250, 600);
 			scoreFont.draw(batch, highscoreScore3 + "", 345, 600);
 			
-			batch.draw(bronzemedal, 55, 577);
 		}
+		scoreFont.draw(batch, "-", 250, 600);
+		batch.draw(bronzemedal, 55, 577);
 		
 		batch.end();
 		

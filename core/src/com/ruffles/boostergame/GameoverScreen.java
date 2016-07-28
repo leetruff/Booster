@@ -46,6 +46,19 @@ public class GameoverScreen implements Screen {
 	int score;
 	BitmapFont scoreFont;
 	
+	String highscoreName1;
+	String highscoreName2;
+	String highscoreName3;
+	
+	int highscoreScore1;
+	int highscoreScore2;
+	int highscoreScore3;
+	
+	Texture goldmedal;
+	Texture silvermedal;
+	Texture bronzemedal;
+	private BitmapFont scoreFont2;
+	
 	public GameoverScreen(MyGdxGame game, int backgroundYpos, int score) {
 		this.game = game;
 		this.backgroundYpos = backgroundYpos;
@@ -112,6 +125,54 @@ public class GameoverScreen implements Screen {
 		FreeTypeFontParameter parameter2 = new FreeTypeFontParameter();
 		parameter2.size = 35;
 		scoreFont = generator.generateFont(parameter2);
+		
+		FreeTypeFontParameter parameter3 = new FreeTypeFontParameter();
+		parameter3.size = 25;
+		scoreFont2 = generator.generateFont(parameter3);
+		
+		/*
+		 * Medaillen Texturen laden
+		 */
+		
+		goldmedal = new Texture(Gdx.files.internal("medals/goldmedalsmall.png"));
+		silvermedal = new Texture(Gdx.files.internal("medals/silvermedalsmall.png"));
+		bronzemedal = new Texture(Gdx.files.internal("medals/bronzemedalsmall.png"));
+		
+		/*
+		 * Highscores aus .prefs auslesen
+		 */
+		
+//		highscoreName1 = "Lars";
+//		highscoreName2 = "Lars";
+//		highscoreName3 = "Lars";
+//		
+//		highscoreScore1 = 16512;
+//		highscoreScore2 = 12941;
+//		highscoreScore3 = 5122;
+		
+		if(IOController.prefs.getString("highscoreName1") != null){
+			highscoreName1 = IOController.prefs.getString("highscoreName1", "-1");
+		}
+		
+		if(IOController.prefs.getInteger("highscoreScore1") > 0){
+			highscoreScore1 = IOController.prefs.getInteger("highscoreScore1");
+		}
+		
+		if(IOController.prefs.getString("highscoreName2") != null){
+			highscoreName2 = IOController.prefs.getString("highscoreName2", "-1");
+		}
+		
+		if(IOController.prefs.getInteger("highscoreScore2") > 0){
+			highscoreScore2 = IOController.prefs.getInteger("highscoreScore2");
+		}
+		
+		if(IOController.prefs.getString("highscoreName3") != null){
+			highscoreName3 = IOController.prefs.getString("highscoreName3", "-1");
+		}
+		
+		if(IOController.prefs.getInteger("highscoreScore3") > 0){
+			highscoreScore3 = IOController.prefs.getInteger("highscoreScore3");
+		}
 	}
 
 	@Override
@@ -139,6 +200,31 @@ public class GameoverScreen implements Screen {
 		
 		else
 		scoreFont.draw(batch, score + "", 184, 750);
+		
+		
+		if(highscoreName1 != "-1"){
+			scoreFont2.draw(batch, highscoreName1, 85, 600);
+			scoreFont2.draw(batch, highscoreScore1 + "", 345, 600);
+			
+		}
+		scoreFont2.draw(batch, "-", 250, 600);
+		batch.draw(goldmedal, 55, 577);
+		
+		if(highscoreName2 != "-1"){
+			scoreFont2.draw(batch, highscoreName2, 85, 550);
+			scoreFont2.draw(batch, highscoreScore2 + "", 345, 550);
+			
+		}
+		scoreFont2.draw(batch, "-", 250, 550);
+		batch.draw(silvermedal, 55, 527);
+		
+		if(highscoreName3 != "-1"){
+			scoreFont2.draw(batch, highscoreName3, 85, 500);
+			scoreFont2.draw(batch, highscoreScore3 + "", 345, 500);
+			
+		}
+		scoreFont2.draw(batch, "-", 250, 500);
+		batch.draw(bronzemedal, 55, 477);
 		
 		batch.end();
 		
